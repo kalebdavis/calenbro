@@ -19,6 +19,6 @@ from . import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^event/[^/]+', views.eventDetails),
+    url(r'^event/(?P<eventID>[^/]+)', views.eventDetails),
     url(r'^event/new/', views.newEvent)
 ]
