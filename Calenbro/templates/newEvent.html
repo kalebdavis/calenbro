@@ -1,8 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
 <html>
 <head>
     <title>Create a new Calenbro</title>
 </head>
 <body>
   <h1>Create new Event</h1>
+  <form>
+    Event name: <br>
+    <input type="text" name="Name" class="eventName"></input><br>
+    Event start date: <br>
+    <input type="text" name="startDate" class="startDate"></input> <br>
+    Event end date: <br>
+    <input type="text" name="endDate" class="endDate"></input> <br>
+    <button class="createNewEventButton">Create new event</button>
 </body>
+<script type="text/javascript" src="{% static "javascript/newEvent.js" %}"></script>
 </html>
