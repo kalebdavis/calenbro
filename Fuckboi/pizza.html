@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Title of the document</title>
+</head>
+
+    <script>
+        
+        function calToServer(){
+
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                }
+                };
+                xhttp.open("GET", "/event/create/", false);
+                xhttp.send();
+        }
+    
+    </script>
+    
+        
+    <form>
+        
+        Select file to upload:
+        
+        <input type="file" name="fileToUpload" id="fileToUpload">
+        <button onclick="calToServer()">Fuck you</button>
+
+    
+    </form>
+
+</html>
