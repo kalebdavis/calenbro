@@ -2,12 +2,16 @@ from __future__ import unicode_literals
 
 from django.db import models
 import ics
+import sys
 
 class Event(models.Model):
     name = models.CharField(max_length=140)
     startDate = models.DateTimeField()
     endDate = models.DateTimeField()
     uuid = models.CharField(max_length=50)
+
+    def get_absolute_url(self):
+        return "/event/" + str(self.uuid)
 
 class Calendar(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)

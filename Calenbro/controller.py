@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.shortcuts import redirect
 import uuid
 import sys
 from myapp.models import Event
@@ -19,7 +20,8 @@ def createNewEvent(request):
   newEvent = Event(name= data.pop("Name"), startDate= datetime.now(), endDate= datetime.now(), uuid= eventID)
   # newEvent = Event(name= data.pop("Name"), startDate= data.pop("startDate"), endDate= data.pop('endDate'), uuid= eventID)
   newEvent.save()
-  return HttpResponse(newEvent.name)
+
+  return redirect(newEvent)
 
 def eventDetails(request, eventID):
   curEvent = Event.objects.filter(uuid= eventID)[0]
@@ -27,3 +29,6 @@ def eventDetails(request, eventID):
   # associatedCalendars = Calendar.filter(eventID)
   context  = {'event': curEvent}
   return render(request, 'eventDetails.html', context)
+
+def addCalendar(request):
+  return HttpResponse("wee")
