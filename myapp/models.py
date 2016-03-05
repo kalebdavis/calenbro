@@ -15,3 +15,7 @@ class Calendar(models.Model):
 
     def getCalendar(self):
         return ics.Calendar(contents.decode('iso-8859-1'))
+
+    def getEventList(self):
+        c = getCalendar()
+        return c.events
