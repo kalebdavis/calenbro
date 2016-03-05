@@ -1,9 +1,24 @@
 {% load staticfiles %}
 <html>
 <head>
-    <title>{{ curEvent.name }}</title>
+    <title>{{ event.name }}</title>
 </head>
 <body>
-  <h1>Event {{ curEvent.uuid }}</h1>
+  <h1>Event {{ event.name }}</h1>
+  <h2> Start date: {{ event.startDate }}</h2>
+  <h2> End date: {{ event.endDate }}</h2>
+  <br><br>
+
+  {% for calendar in calendars %}
+    <h3> {{calendar.contents}} </h3>
+  {% endfor %}
+
+  <form enctype="multipart/form-data" action="/event/{{ event.uuid }}/addCalendar/" method="post">
+    {% csrf_token %}
+    Your name: <br>
+    <input type="text" name="name"></input> <br>
+    <input type="file" name="contents"></input>
+    <input type="submit" value="submit">Add Calendar</input>
+  </form>
 </body>
 </html>
