@@ -24,3 +24,7 @@ class Calendar(models.Model):
     def getEventList(self):
         c = getCalendar()
         return c.events
+
+    def parseCalendar(icsFile):
+        return ics.Calendar(icsFile)
+
