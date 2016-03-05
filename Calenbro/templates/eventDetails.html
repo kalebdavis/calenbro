@@ -1,9 +1,11 @@
 {% load staticfiles %}
 <html>
 <head>
-    <title>{{ curEvent.name }}</title>
+    <title>{{ event.name }}</title>
 </head>
 <body>
-  <h1>Event {{ curEvent.uuid }}</h1>
+  <h1>Event {{ event.name }}</h1>
+  <h2> Start date: {{ event.startDate }}</h2>
+  <h2> End date: {{ event.endDate }}</h2>
 </body>
 </html>

@@ -7,9 +7,10 @@ class Event(models.Model):
     name = models.CharField(max_length=140)
     startDate = models.DateTimeField()
     endDate = models.DateTimeField()
+    uuid = models.CharField(max_length=50)
 
 class Calendar(models.Model):
-    event = models.ForeignKey(Event)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
     username = models.CharField(max_length=100)
     contents = models.TextField()
 
