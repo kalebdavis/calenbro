@@ -1,11 +1,13 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+import uuid
 
 def newEvent(request):
   return render(request, 'newEvent.html')
 
 def createNewEvent(request):
-  return HttpResponse("")
+  eventID = uuid.uuid4()
+  return HttpResponse(str(eventID))
 
 def eventDetails(request, eventID):
   # curEvent = Event.find(eventID)
