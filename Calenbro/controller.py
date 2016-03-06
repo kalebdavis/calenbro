@@ -88,7 +88,6 @@ def createHeapMap(request, eventID):
           heap[startDate] = 1
         else:
           heap[startDate] += 1
-  print(createDataFromHeap(heap))
   return heap
 
 def createDataFromHeap(heap):

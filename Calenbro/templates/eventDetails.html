@@ -40,6 +40,17 @@
       <div id="heatmap" style="height: 400px; min-width: 310px; max-width: 800px; margin: 0 auto"></div>
     </div>
   </div>
+
+  <br/>
+  <div class="container list-group">
+    <a href="#" class="list-group-item active">
+      Who Submitted
+    </a>
+    {% for c in calendars %}
+      <a href="#" class="list-group-item">{{c.username}}
+      </a>
+    {% endfor %}
+  </div>
 {% endblock content %}
 
 {% block scripts %}
