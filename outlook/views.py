@@ -34,17 +34,17 @@ def events(request):
         return HttpResponseRedirect('/')
     else:
         events = get_my_events(access_token, user_email)
-        parseEvents(events['value'])
-        newCalendar = myappCalendar(username=user_email, contents=parseEvents(events['value']), event=curEvent)
+        newCalendar = myappCalendar(username=user_email, contents=parseEvents(events['value'], curEvent), event=curEvent)
         newCalendar.save()
         return redirect(curEvent)
 
-def parseEvents(events):
+def parseEvents(events, curEvent):
     c = Calendar()
     for e in events:
         event = Event()
         event.name = e['Subject']
         event.begin = e['Start']
         event.end = e['End']
-        c.events.append(event)
+        if event.begin >= curEvent.startDate and event.end <= curEvent.endDate:
+          c.events.append(event)
     return c
