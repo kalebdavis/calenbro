@@ -1,9 +1,11 @@
+from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.shortcuts import redirect
 import uuid
 import sys
 from myapp.models import Event
 from myapp.models import Calendar
+from outlook.authhelper import get_signin_url
 from datetime import datetime
 
 def newEvent(request):
@@ -31,7 +33,10 @@ def getStartAndEnd(daterange):
 def eventDetails(request, eventID):
   curEvent = Event.objects.filter(uuid= eventID)[0]
   associatedCalendars = Calendar.objects.filter(event= curEvent)
-  context  = {'event': curEvent, 'calendars': associatedCalendars}
+  redirect_uri = request.build_absolute_uri(reverse('outlook:gettoken'))
+  sign_in_url = get_signin_url(redirect_uri)
+  request.session['curEventID'] = eventID
+  context  = {'event': curEvent, 'calendars': associatedCalendars, 'signin_url': sign_in_url }
   return render(request, 'eventDetails.html', context)
 
 def addCalendar(request, eventID):

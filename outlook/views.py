@@ -1,8 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from outlook.authhelper import get_signin_url, get_token_from_code, get_user_email_from_id_token
 from outlook.outlookservice import get_my_events
+from ics import Calendar, Event
+from myapp.models import Event as myappEvent
+from myapp.models import Calendar as myappCalendar
 
 def home(request):
     redirect_uri = request.build_absolute_uri(reverse('outlook:gettoken'))
@@ -24,10 +27,24 @@ def gettoken(request):
 def events(request):
     access_token = request.session['access_token']
     user_email = request.session['user_email']
+    eventID = request.session['curEventID']
+    curEvent = myappEvent.objects.get(uuid=eventID)
 
     if not access_token:
-        return HttpResponseRedirect(reverse('outlook:home'))
+        return HttpResponseRedirect('/')
     else:
         events = get_my_events(access_token, user_email)
-        context = { 'events': events['value'] }
-        return render(request, 'outlook/events.html', context)
+        parseEvents(events['value'])
+        newCalendar = myappCalendar(username=user_email, contents=parseEvents(events['value']), event=curEvent)
+        newCalendar.save()
+        return redirect(curEvent)
+
+def parseEvents(events):
+    c = Calendar()
+    for e in events:
+        event = Event()
+        event.name = e['Subject']
+        event.begin = e['Start']
+        event.end = e['End']
+        c.events.append(event)
+    return c

@@ -13,6 +13,7 @@
     <h3> {{calendar.contents}} </h3>
   {% endfor %}
 
+  <a href="{{ signin_url }}">Click here to add outlook calendar</a>
   <form enctype="multipart/form-data" action="/event/{{ event.uuid }}/addCalendar/" method="post">
     {% csrf_token %}
     Your name: <br>
