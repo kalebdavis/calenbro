@@ -7,7 +7,7 @@ import sys
 from myapp.models import Event
 from myapp.models import Calendar
 from outlook.authhelper import get_signin_url
-from datetime import datetime
+from datetime import datetime, date
 from ics import Calendar as ICSCalendar
 
 def home(request):
@@ -46,9 +46,11 @@ def eventDetails(request, eventID):
   redirect_uri = request.build_absolute_uri(reverse('outlook:gettoken'))
   sign_in_url = get_signin_url(redirect_uri)
   request.session['curEventID'] = eventID
-  context  = {'event': curEvent, 'calendars': associatedCalendars, 'signin_url': sign_in_url }
 
-  createHeapMap(request, eventID)
+  # get data for heat map
+  heapData = createDataFromHeap(createHeapMap(request, eventID))
+  context  = {'event': curEvent, 'calendars': associatedCalendars, 'signin_url': sign_in_url, 'heapData': heapData }
+
   return render(request, 'eventDetails.html', context)
 
 def addCalendar(request, eventID):
@@ -86,5 +88,51 @@ def createHeapMap(request, eventID):
           heap[startDate] = 1
         else:
           heap[startDate] += 1
-  print(heap)
+  print(createDataFromHeap(heap))
   return heap
+
+def createDataFromHeap(heap):
+  mapOfDates = {
+                date(2016,3,1): [2,4],
+                date(2016,3,2): [3,4],
+                date(2016,3,3): [4,4],
+                date(2016,3,4): [5,4],
+                date(2016,3,5): [6,4],
+                date(2016,3,6): [0,3],
+                date(2016,3,7): [1,3],
+                date(2016,3,8): [2,3],
+                date(2016,3,9): [3,3],
+                date(2016,3,10): [4,3],
+                date(2016,3,11): [5,3],
+                date(2016,3,12): [6,3],
+                date(2016,3,13): [0,2],
+                date(2016,3,14): [1,2],
+                date(2016,3,15): [2,2],
+                date(2016,3,16): [3,2],
+                date(2016,3,17): [4,2],
+                date(2016,3,18): [5,2],
+                date(2016,3,19): [6,2],
+                date(2016,3,20): [0,1],
+                date(2016,3,21): [1,1],
+                date(2016,3,22): [2,1],
+                date(2016,3,23): [3,1],
+                date(2016,3,24): [4,1],
+                date(2016,3,25): [5,1],
+                date(2016,3,26): [6,1],
+                date(2016,3,27): [0,0],
+                date(2016,3,28): [1,0],
+                date(2016,3,29): [2,0],
+                date(2016,3,30): [3,0],
+                date(2016,3,31): [4,0],
+               }
+  data = []
+  for k,v in mapOfDates.iteritems():
+    if k in heap.keys():
+      d = v
+      d.append(heap[k])
+      data.append(d)
+    else:
+      d = v
+      d.append(0)
+      data.append(d)
+  return data
