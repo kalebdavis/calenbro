@@ -3,6 +3,13 @@
 <html>
 <head>
     <title>Create a new Calenbro</title>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
+     
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
 </head>
 <body>
   <h1>Create new Event</h1>
@@ -10,12 +17,15 @@
     {% csrf_token %}
     Event name: <br>
     <input type="text" name="name" class="eventName"></input><br>
-    Event start date: <br>
-    <input type="text" name="startDate" class="startDate"></input> <br>
-    Event end date: <br>
-    <input type="text" name="endDate" class="endDate"></input> <br>
+    Event dates: <br>
+    <input type="text" name="daterange" class="daterange"></input> <br>
     <button class="createNewEventButton">Create new event</button>
   </form>
 </body>
 <script type="text/javascript" src="{% static "javascript/newEvent.js" %}"></script>
+<script type="text/javascript">
+  $(function() {
+    $('input[name="daterange"]').daterangepicker();
+  });
+</script>
 </html>

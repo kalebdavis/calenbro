@@ -15,11 +15,18 @@ def createNewEvent(request):
   while (len(Event.objects.filter(uuid= eventID)) > 0):
     eventID = uuid.uuid4()
   data = request.POST.copy()
-
-  newEvent = Event(name= data.pop("name"), startDate= datetime.now(), endDate= datetime.now(), uuid= eventID)
+  
+  startDate, endDate = getStartAndEnd(data.pop('daterange')[0])
+  newEvent = Event(name= data.pop("name"), startDate=startDate, endDate=endDate, uuid= eventID)
   newEvent.save()
 
   return redirect(newEvent)
+
+def getStartAndEnd(daterange):
+  dates = daterange.split(' - ')
+  startTime = datetime.strptime(dates[0], "%m/%d/%Y")
+  endTime = datetime.strptime(dates[1], "%m/%d/%Y")
+  return startTime, endTime
 
 def eventDetails(request, eventID):
   curEvent = Event.objects.filter(uuid= eventID)[0]
