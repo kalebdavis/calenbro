@@ -10,6 +10,14 @@ from outlook.authhelper import get_signin_url
 from datetime import datetime
 from ics import Calendar as ICSCalendar
 
+def home(request):
+  return render(request, 'home.html', {})
+
+def allEvents(request):
+  events = Event.objects.all()
+  context = { 'events': events }
+  return render(request, 'events.html', context)
+
 def newEvent(request):
   return render(request, 'newEvent.html')
 

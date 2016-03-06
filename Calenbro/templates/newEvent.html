@@ -1,31 +1,56 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create a new Calenbro</title>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/latest/css/bootstrap.css" />
-     
-    <!-- Include Date Range Picker -->
-    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-</head>
-<body>
-  <h1>Create new Event</h1>
-  <form action="/event/create/" method="post">
-    {% csrf_token %}
-    Event name: <br>
-    <input type="text" name="name" class="eventName"></input><br>
-    Event dates: <br>
-    <input type="text" name="daterange" class="daterange"></input> <br>
-    <button class="createNewEventButton">Create new event</button>
-  </form>
-</body>
-<script type="text/javascript" src="{% static "javascript/newEvent.js" %}"></script>
-<script type="text/javascript">
-  $(function() {
-    $('input[name="daterange"]').daterangepicker();
-  });
-</script>
-</html>
+
+{% block title %}Create a new Calenbro{% endblock title %}
+
+{% block content %}
+  <div class="col-lg-6 center">
+    <form class="form-horizontal" action="/event/create/" method="post">
+      <fieldset>
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="eventName" class="col-lg-2 control-label">Event Name</label>
+          <div class="col-lg-10">
+            <input type="text" name="name" class="eventName" id="eventName" placeholder="Event Name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="daterange" class="col-lg-2 control-label">Event Dates</label>
+          <div class="col-lg-10">
+            <input type="text" name="daterange" class="daterange" id="daterange" placeholder="Pick a range of dates">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-lg-10 col-lg-offset-2">
+            <button type="reset" class="btn btn-default">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create New Event</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+{% endblock content %}
+
+{% block scripts %}
+  <script type="text/javascript" src="{% static "javascript/newEvent.js" %}"></script>
+  <script type="text/javascript">
+    $(function() {
+
+      $('input[name="daterange"]').daterangepicker({
+          autoUpdateInput: false,
+          locale: {
+              cancelLabel: 'Clear'
+          }
+      });
+
+      $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
+          $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+      });
+
+      $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
+          $(this).val('');
+      });
+
+    });
+  </script>
+{% endblock scripts %}

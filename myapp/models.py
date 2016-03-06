@@ -10,6 +10,9 @@ class Event(models.Model):
     endDate = models.DateTimeField()
     uuid = models.CharField(max_length=50)
 
+    def __str__(self):
+      return str(name)
+
     def get_absolute_url(self):
         return "/event/" + str(self.uuid)
 

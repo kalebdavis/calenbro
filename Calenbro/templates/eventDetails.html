@@ -1,9 +1,9 @@
+{% extends 'base.html' %}
 {% load staticfiles %}
-<html>
-<head>
-    <title>{{ event.name }}</title>
-</head>
-<body>
+
+{% block title %}{{event.name}}{% endblock title %}
+
+{% block content %}
   <h1>Event {{ event.name }}</h1>
   <h2> Start date: {{ event.startDate }}</h2>
   <h2> End date: {{ event.endDate }}</h2>
@@ -21,5 +21,4 @@
     <input type="file" name="contents"></input>
     <input type="submit" value="submit">Add Calendar</input>
   </form>
-</body>
-</html>
+{% endblock content %}

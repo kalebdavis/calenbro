@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}All Events{% endblock title %}
+
+{% block content %}
+    <h1>All Events</h1>
+    <table width="100%" border="1">
+      <tr>
+        <th>Title</th>
+        <th>Start</th>
+        <th>End</th>
+      </tr>
+      {% for event in events %}
+        <tr>
+          <td><a href="/event/{{event.uuid}}">{{ event.name }}</a></td>
+          <td>{{ event.startDate }}</td>
+          <td>{{ event.endDate }}</td>
+        </tr>
+      {% endfor %}
+    </table>
+{% endblock content %}
