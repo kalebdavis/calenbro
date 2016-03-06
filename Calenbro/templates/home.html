@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Calenbro{% endblock title %}
 
 {% block content %}
   <div class="jumbotron text-center">
+    <img src="{% static "calenbro.jpg" %}" width=25%/>
     <h1>Calenbro</h1>
     <p>Use this app to coordinate events with your friends. Upload your calendars to find a time that works for all of you!</p>
     <p><a class="btn btn-success btn-lg" href="/event/new">Create an Event</a></p>
