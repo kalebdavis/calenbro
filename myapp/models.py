@@ -9,6 +9,8 @@ class Event(models.Model):
     startDate = models.DateTimeField()
     endDate = models.DateTimeField()
     uuid = models.CharField(max_length=50)
+    ownerName = models.CharField(max_length=60)
+    ownerEmail = models.EmailField(max_length=254)
 
     def __str__(self):
       return str(name)

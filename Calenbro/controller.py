@@ -47,6 +47,8 @@ def eventDetails(request, eventID):
   sign_in_url = get_signin_url(redirect_uri)
   request.session['curEventID'] = eventID
   context  = {'event': curEvent, 'calendars': associatedCalendars, 'signin_url': sign_in_url }
+
+  createHeapMap(request, eventID)
   return render(request, 'eventDetails.html', context)
 
 def addCalendar(request, eventID):
@@ -66,3 +68,23 @@ def addCalendar(request, eventID):
   newCalendar.save()
 
   return redirect(curEvent)
+
+def createHeapMap(request, eventID):
+  curEvent = Event.objects.get(uuid=eventID)
+  calendars = Calendar.objects.filter(event=curEvent)
+  minDate = curEvent.startDate.date()
+  maxDate = curEvent.endDate.date()
+
+  heap = {}
+  for c in calendars:
+    c = ICSCalendar(c.contents)
+    for e in c.events:
+      startDate = e.begin.date()
+      endDate = e.end.date()
+      if startDate >= minDate and endDate <= maxDate:
+        if startDate not in heap:
+          heap[startDate] = 1
+        else:
+          heap[startDate] += 1
+  print(heap)
+  return heap
