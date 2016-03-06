@@ -22,7 +22,9 @@
 
   <div class='container'>
     <div class="well col-lg-3">
-      <a href="{{ signin_url }}" class='btn btn-primary'>Add outlook calendar</a>
+      <a href="#" class='btn btn-warning'>Add Google calendar (N/A)</a>
+      <p> OR </p>
+      <a href="{{ signin_url }}" class='btn btn-primary'>Add Outlook calendar</a>
       <p> OR </p>
       <form enctype="multipart/form-data" action="/event/{{ event.uuid }}/addCalendar/" method="post">
         {% csrf_token %}
