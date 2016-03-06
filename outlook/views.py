@@ -26,7 +26,7 @@ def gettoken(request):
 
 def events(request):
     access_token = request.session['access_token']
-    user_email = request.session['user_email']
+    user_email = 'kalebdavis346@outlook.com'
     eventID = request.session['curEventID']
     curEvent = myappEvent.objects.get(uuid=eventID)
 
@@ -43,8 +43,8 @@ def parseEvents(events, curEvent):
     for e in events:
         event = Event()
         event.name = e['Subject']
-        event.begin = e['Start']
-        event.end = e['End']
+        event.begin = e['Start']['DateTime']
+        event.end = e['End']['DateTime']
         if event.begin >= curEvent.startDate and event.end <= curEvent.endDate:
           c.events.append(event)
     return c

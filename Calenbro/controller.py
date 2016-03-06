@@ -66,7 +66,7 @@ def addCalendar(request, eventID):
   calendarEvents[:] = [x for x in calendarEvents if not (x.begin < minDate or x.end > maxDate)]
   cal.events = calendarEvents
 
-  newCalendar = Calendar(username= requestData.pop("name"), contents= str(cal), event= curEvent)
+  newCalendar = Calendar(username= requestData.pop("name")[0], contents= str(cal), event= curEvent)
   newCalendar.save()
 
   return redirect(curEvent)
