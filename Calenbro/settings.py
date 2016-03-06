@@ -126,3 +126,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
   os.path.join(BASE_DIR, 'static'),
 )
+
+SPARKPOST_API_KEY = '3e362f604c844ff94c733a8f64e819d037886b3e'
+EMAIL_BACKEND = 'sparkpost.django.email_backend.SparkPostEmailBackend'
+
