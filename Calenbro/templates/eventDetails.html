@@ -4,21 +4,45 @@
 {% block title %}{{event.name}}{% endblock title %}
 
 {% block content %}
-  <h1>Event {{ event.name }}</h1>
-  <h2> Start date: {{ event.startDate }}</h2>
-  <h2> End date: {{ event.endDate }}</h2>
-  <br><br>
+  <div class="panel panel-default">
+    <div class="panel-heading">Event {{ event.name }}</div>
+    <div class="panel-body">
+      <ul class="list-group">
+        <li class="list-group-item">
+          Start Date: {{ event.startDate }} 
+        </li>
+        <li class="list-group-item">
+          End Date: {{ event.endDate }} 
+        </li>
+        <li class="list-group-item">
+          Owner Name: {{ event.ownerName }}
+        </li>
+        <li class="list-group-item">
+          Owner Email: {{ event.ownerEmail }}
+        </li>
+      </ul>
+    </div>
+  </div>
 
   {% for calendar in calendars %}
-    <h3> {{calendar.contents}} </h3>
+    <div class="well">
+      <h3> {{calendar.contents}} </h3>
+    </div>
   {% endfor %}
 
-  <a href="{{ signin_url }}">Click here to add outlook calendar</a>
-  <form enctype="multipart/form-data" action="/event/{{ event.uuid }}/addCalendar/" method="post">
-    {% csrf_token %}
-    Your name: <br>
-    <input type="text" name="name"></input> <br>
-    <input type="file" name="contents"></input>
-    <input type="submit" value="submit">Add Calendar</input>
-  </form>
+  <div class="col-lg-2"></div>
+  <div class="well col-lg-3">
+    <a href="{{ signin_url }}">Click here to add outlook calendar</a>
+  </div>
+  <div class="col-lg-2"><p class='text-center'>OR</p></div>
+  <div class="well col-lg-3">
+    <form enctype="multipart/form-data" action="/event/{{ event.uuid }}/addCalendar/" method="post">
+      {% csrf_token %}
+      Your name: <br>
+      <input type="text" name="name"></input> <br>
+      <input type="file" name="contents"></input>
+      <input type="submit" value="submit">Add Calendar</input>
+    </form>
+  </div>
+  <div class="col-lg-2"></div>
 {% endblock content %}
