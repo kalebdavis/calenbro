@@ -29,7 +29,7 @@ def createNewEvent(request):
   data = request.POST.copy()
   
   startDate, endDate = getStartAndEnd(data.pop('daterange')[0])
-  newEvent = Event(name= data.pop("name"), startDate=startDate, endDate=endDate, uuid= eventID)
+  newEvent = Event(name= data.pop("name"), startDate=startDate, endDate=endDate, uuid= eventID, ownerName=data.pop('ownerName'), ownerEmail=data.pop('ownerEmail'))
   newEvent.save()
 
   return redirect(newEvent)

@@ -9,12 +9,16 @@
         <th>Title</th>
         <th>Start</th>
         <th>End</th>
+        <th>Owner's Name</th>
+        <th>Owner's Email</th>
       </tr>
       {% for event in events %}
         <tr>
           <td><a href="/event/{{event.uuid}}">{{ event.name }}</a></td>
           <td>{{ event.startDate }}</td>
           <td>{{ event.endDate }}</td>
+          <td>{{ event.ownerName }}</td>
+          <td>{{ event.ownerEmail }}</td>
         </tr>
       {% endfor %}
     </table>
