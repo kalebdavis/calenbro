@@ -21,18 +21,38 @@
   </div>
 
   <div class='container'>
-    <div class="well col-lg-3">
-      <a href="#" class='btn btn-warning'>Add Google calendar (N/A)</a>
-      <p> OR </p>
-      <a href="{{ signin_url }}" class='btn btn-primary'>Add Outlook calendar</a>
-      <p> OR </p>
-      <form enctype="multipart/form-data" action="/event/{{ event.uuid }}/addCalendar/" method="post">
-        {% csrf_token %}
-        Your name: <br>
-        <input type="text" name="name"></input> <br>
-        <input type="file" name="contents"></input>
-        <input type="submit" value="submit">Add Calendar</input>
-      </form>
+    <div class="panel panel-default col-lg-4">
+      <div class="panel-heading">Add Calendar</h3></div>
+      <div class="panel-body">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <a href="#" class='btn btn-warning'>Add Google calendar (N/A)</a>
+          </li>
+          <li class="list-group-item">
+            <a href="{{ signin_url }}" class='btn btn-primary'>Add Outlook calendar</a>
+          </li>
+          <li class="list-group-item">
+            <form class='form-horizontal' enctype="multipart/form-data" action="/event/{{ event.uuid }}/addCalendar/" method="post">
+              <fieldset>
+                {% csrf_token %}
+                <div class='form-group'>
+                  <label for="yourName" class="col-lg-2 control-label">Your Name</label>
+                  <div class="col-lg-10">
+                    <input type="text" name="name" class="form-control" id="yourName" placeholder="Your Name">
+                  </div>
+                </div>
+                <div class='form-group'>
+                  <label for="file" class="col-lg-2 control-label">Upload File</label>
+                  <div class="col-lg-10">
+                    <input type="file" name="contents" class="form-control" id="file" placeholder="Upload File">
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </fieldset>
+            </form>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class='col-lg-8'>
       <div id="heatmap" style="height: 400px; min-width: 310px; max-width: 800px; margin: 0 auto"></div>
