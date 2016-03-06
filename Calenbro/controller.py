@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+import ics
 import uuid
 import sys
 from myapp.models import Event
 from myapp.models import Calendar
 from datetime import datetime
+from ics import Calendar as ICSCalendar
 
 def newEvent(request):
   return render(request, 'newEvent.html')
@@ -29,18 +31,25 @@ def getStartAndEnd(daterange):
   return startTime, endTime
 
 def eventDetails(request, eventID):
-  curEvent = Event.objects.filter(uuid= eventID)[0]
+  curEvent = Event.objects.get(uuid= eventID)
   associatedCalendars = Calendar.objects.filter(event= curEvent)
   context  = {'event': curEvent, 'calendars': associatedCalendars}
   return render(request, 'eventDetails.html', context)
 
 def addCalendar(request, eventID):
-  curEvent = Event.objects.filter(uuid= eventID)[0]
+  curEvent = Event.objects.get(uuid= eventID)
+  minDate = curEvent.startDate
+  maxDate = curEvent.endDate
   requestData = request.POST.copy()
   uploadedFile = request.FILES['contents']
   parsedCalendar = uploadedFile.read()
 
-  newCalendar = Calendar(username= requestData.pop("name"), contents= parsedCalendar, event= curEvent)
+  cal = ICSCalendar(parsedCalendar)
+  calendarEvents = cal.events
+  calendarEvents[:] = [x for x in calendarEvents if not (x.begin < minDate or x.end > maxDate)]
+  cal.events = calendarEvents
+
+  newCalendar = Calendar(username= requestData.pop("name"), contents= str(cal), event= curEvent)
   newCalendar.save()
 
   return redirect(curEvent)
