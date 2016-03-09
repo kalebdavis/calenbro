@@ -20,3 +20,4 @@ sparkpost==1.0.3
 traitlets==4.1.0
 wheel==0.24.0
 whitenoise==2.0.6
+psycopg2==2.4.4
