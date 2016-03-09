@@ -1,1 +1,1 @@
-web: gunicorn calenbro.wsgi --log-file -
+web: gunicorn Calenbro.wsgi --log-file -
